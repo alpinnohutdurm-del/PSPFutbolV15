@@ -1,0 +1,25 @@
+name: PSP Futbol Yapısı
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container:
+      image: pspdev/pspdev:latest
+
+    steps:
+      - name: Kaynak kodunu al
+        uses: actions/checkout@v4
+
+      - name: PSP oyununu derle
+        run: make
+
+      - name: EBOOT dosyasını yükle
+        uses: actions/upload-artifact@v4
+        with:
+          name: PSP-Futbol-V15
+          path: EBOOT.PBP
+          if-no-files-found: error
