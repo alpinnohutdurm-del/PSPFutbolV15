@@ -1,0 +1,25 @@
+name: PSP Futbol Build
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container:
+      image: pspdev/pspdev:latest
+
+    steps:
+      - name: Get source code
+        uses: actions/checkout@v4
+
+      - name: Compile PSP game
+        run: make
+
+      - name: Save EBOOT.PBP
+        uses: actions/upload-artifact@v4
+        with:
+          name: PSP-Futbol-V15
+          path: EBOOT.PBP
+          if-no-files-found: error
